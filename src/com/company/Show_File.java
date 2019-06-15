@@ -8,7 +8,12 @@ public class Show_File {
     Show_File() {}
 
     public void WriteFile (String namefile) {
+        //variabile di istanza relativa al flusso di lettura del file
         int i;
+        //contatore delle lettere C o c
+        int Ccounter = 0;
+        //contatore delle parole nel testo del file
+        int Pcounter = 0;
         FileInputStream fis = null;
         PrintWriter pw = new PrintWriter(System.out, true);
 
@@ -24,9 +29,13 @@ public class Show_File {
             do {
                 //leggo tramute il flusso i caratteri nel file
                 i = fis.read();
+                String s = String.valueOf((char) i);
+                if (s.equals("c") || s.equals("C")) Ccounter++;
                 //se non sono alla fine del file (eof = -1) stampo a schermo il carattere letto (che in realtà è intero e viene convertito)
                 if (i != -1) {
                     System.out.print((char) i);
+                    if (s.equals("\n") || s.equals(" ") || s.equals("")) Pcounter--;
+                    else Pcounter++;
                 }
             }   while (i != -1);
 
@@ -42,5 +51,9 @@ public class Show_File {
                     pw.println("Errore di chiusura");
                 }
         }
+
+        pw.println("\n" + "Le C o c sono: " + Ccounter);
+        pw.println("Le parole del testo nel file sono " + Pcounter);
+
     }
 }
